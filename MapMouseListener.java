@@ -27,12 +27,12 @@ public class MapMouseListener {
         if (pixColor == NO_COUNTRY ) {
 
         }
-        else if (gameState == RiskGame.STATE_PLACE_ARMIES) {
-                if ( myrisk.isOwnedCurrentPlayerInt(pixColor) && (myrisk.getGame().NoEmptyCountries() || myrisk.hasArmiesInt(pixColor) == 0) ) {
-                        return new int[] {pixColor};
+        else if ((gameState == RiskGame.STATE_PLACE_ARMIES) &&( myrisk.isOwnedCurrentPlayerInt(pixColor) && (myrisk.getGame().NoEmptyCountries() || myrisk.hasArmiesInt(pixColor) == 0))) {
+             return new int[] {pixColor};
                 }
         }
-        else if (gameState == RiskGame.STATE_ATTACKING) {
+    public int[] mouseReleased2(int x, int y,int gameState) {
+                if (gameState == RiskGame.STATE_ATTACKING) {
 
                 while( pixColor == pp.getC1() ) {
                         pp.setC1(NO_COUNTRY);
@@ -53,7 +53,9 @@ public class MapMouseListener {
                 }
 
         }
-        else if (gameState == RiskGame.STATE_FORTIFYING) {
+    }
+    public int[] mouseReleased3(int x, int y,int gameState) {
+                if (gameState == RiskGame.STATE_FORTIFYING) {
 
                 while ( pp.getC1()!=NO_COUNTRY && pp.getC2()==NO_COUNTRY && pixColor == pp.getC1() ) {
                         pp.setC1(NO_COUNTRY);
@@ -80,7 +82,8 @@ public class MapMouseListener {
                 }
 
         }
-        else if (gameState == RiskGame.STATE_SELECT_CAPITAL) {
+        public int[] mouseReleased4(int x, int y,int gameState) {
+                if (gameState == RiskGame.STATE_SELECT_CAPITAL) {
 
                 while( myrisk.isOwnedCurrentPlayerInt(pixColor) ) {
                         pp.setC1(pixColor);
