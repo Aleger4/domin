@@ -23,7 +23,6 @@ import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.core.StatType;
 import net.yura.domination.engine.core.Statistic;
-import static sun.audio.AudioPlayer.player;
 
 /**
  * @author Steven Hawkins
@@ -477,8 +476,9 @@ public class AIDomination extends AISubmissive {
 	 * @param attack
 	 * @return
 	 */
-        private plan1(){
-            if (attack && attackable.isEmpty()) {
+	private String plan(boolean attack) {
+		List<Country> attackable = findAttackableTerritories(player, attack);
+		if (attack && attackable.isEmpty()) {
 			return "endattack";
 		}
 		GameState gameState = getGameState(player, false);
@@ -502,22 +502,13 @@ public class AIDomination extends AISubmissive {
 				}
 			}
 		}
-        }
-        private plan2(){
-            if (attack && player.getType() == PLAYER_AI_EASY && game.getMaxDefendDice() == 2 && game.isCapturedCountry() && r.nextBoolean()) {
-			ArrayList<AttackTarget> targetList = new ArrayList<AIDomination.AttackTarget>(targets.values());
-			Collections.sort(targetList, Collections.reverseOrder());
-        }
-	public String plan(boolean attack) {
-		List<Country> attackable = findAttackableTerritories(player, attack);
-                plan1();
-                GameState gameState;
-		
 
 		HashMap<Country, AttackTarget> targets = searchAllTargets(attack, attackable, gameState);
-                plan2();  
+
 		//easy seems to be too hard based upon player feedback, so this dumbs down the play with a greedy attack
-		
+		if (attack && player.getType() == PLAYER_AI_EASY && game.getMaxDefendDice() == 2 && game.isCapturedCountry() && r.nextBoolean()) {
+			ArrayList<AttackTarget> targetList = new ArrayList<AIDomination.AttackTarget>(targets.values());
+			Collections.sort(targetList, Collections.reverseOrder());
 			for (AttackTarget at : targetList) {
 				if (at.remaining < 1) {
 					break;
@@ -526,7 +517,7 @@ public class AIDomination extends AISubmissive {
 				Country start = attackable.get(route);
 				return getAttack(targets, at, route, start);
 			}
-		
+		}
 
 		return plan(attack, attackable, gameState, targets);
 	}
