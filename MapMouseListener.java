@@ -127,7 +127,10 @@ public int[] Released2(){
                         cc = pixColor;
                 }
         }
-        else if ( gameState == RiskGame.STATE_ATTACKING) {
+        
+    }
+   public void moved1(){
+       if ( gameState == RiskGame.STATE_ATTACKING) {
                 while ( myrisk.isOwnedCurrentPlayerInt(pixColor) && (myrisk.hasArmiesInt(pixColor) > 1) ) {
                         cc = pixColor;
                         break;
@@ -137,14 +140,19 @@ public int[] Released2(){
                         break;
                 }
         }
-    }
+   }
     public void Moved2(){
               if ( gameState == RiskGame.STATE_FORTIFYING) {
                 while( myrisk.isOwnedCurrentPlayerInt(pixColor) && (myrisk.hasArmiesInt(pixColor) > 1 && pp.getC1() == NO_COUNTRY ) ) {
                         cc = pixColor;
                         break;
                 }
-               while ( myrisk.isOwnedCurrentPlayerInt(pixColor) && pp.getC1() != NO_COUNTRY && myrisk.canAttack( pp.getC1() , pixColor) ) {
+               
+        }
+    }
+              public void Moved3(){ 
+                  if ( gameState == RiskGame.STATE_FORTIFYING) {
+                  while ( myrisk.isOwnedCurrentPlayerInt(pixColor) && pp.getC1() != NO_COUNTRY && myrisk.canAttack( pp.getC1() , pixColor) ) {
                         cc = pixColor;
                         break;
                 }
@@ -152,7 +160,7 @@ public int[] Released2(){
 			cc = pixColor;
 			break;
 		}
-        }
+              }
         
     }
     public void mouseMoved(int x,int y,int gameState) {
@@ -161,7 +169,9 @@ public int[] Released2(){
         int cc = NO_COUNTRY;
 
         Moved();
+        moved1();
         Moved2();
+        Moved3();
         
         if (gameState == RiskGame.STATE_SELECT_CAPITAL) {
                 while ( myrisk.isOwnedCurrentPlayerInt(pixColor) ) {
