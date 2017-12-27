@@ -70,7 +70,15 @@ public int[] Released2(){
                         pp.repaint();
                         return new int[] { pixColor };
                 }
-                if( pp.getC1() != NO_COUNTRY && myrisk.isOwnedCurrentPlayerInt(pixColor) && pp.getC2() != pixColor && myrisk.canAttack( pp.getC1() , pixColor) ) {
+                
+
+        }
+        return null;
+    
+}
+    public int[] Released3(){
+        if (gameState == RiskGame.STATE_FORTIFYING){
+        while( pp.getC1() != NO_COUNTRY && myrisk.isOwnedCurrentPlayerInt(pixColor) && pp.getC2() != pixColor && myrisk.canAttack( pp.getC1() , pixColor) ) {
                         pp.setC2(pixColor);
                         pp.repaint();
                         return new int[] { pp.getC1(),pixColor };
@@ -81,11 +89,9 @@ public int[] Released2(){
                         pp.repaint();
                         return new int[] { pixColor };
                 }
-
         }
         return null;
-    
-}
+    }
     public int[] mouseReleased(int x, int y,int gameState) {
 
         int pixColor = pp.getCountryNumber(x,y);
@@ -93,6 +99,7 @@ public int[] Released2(){
         Released();
         Released1();
         Released2();
+        Released3();
         
         if (gameState == RiskGame.STATE_SELECT_CAPITAL) {
 
