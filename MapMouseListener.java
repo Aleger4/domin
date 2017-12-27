@@ -118,12 +118,7 @@ public int[] Released2(){
                 pp.repaint();
         }
     }
-
-    public void mouseMoved(int x,int y,int gameState) {
-
-        int pixColor = pp.getCountryNumber(x,y);
-        int cc = NO_COUNTRY;
-
+    public void Moved(){
         if (pixColor == NO_COUNTRY ) {
 
         }
@@ -142,7 +137,9 @@ public int[] Released2(){
                         break;
                 }
         }
-        else if ( gameState == RiskGame.STATE_FORTIFYING) {
+    }
+    public void Moved2(){
+              if ( gameState == RiskGame.STATE_FORTIFYING) {
                 while( myrisk.isOwnedCurrentPlayerInt(pixColor) && (myrisk.hasArmiesInt(pixColor) > 1 && pp.getC1() == NO_COUNTRY ) ) {
                         cc = pixColor;
                         break;
@@ -156,7 +153,17 @@ public int[] Released2(){
 			break;
 		}
         }
-        else if (gameState == RiskGame.STATE_SELECT_CAPITAL) {
+        
+    }
+    public void mouseMoved(int x,int y,int gameState) {
+
+        int pixColor = pp.getCountryNumber(x,y);
+        int cc = NO_COUNTRY;
+
+        Moved();
+        Moved2();
+        
+        if (gameState == RiskGame.STATE_SELECT_CAPITAL) {
                 while ( myrisk.isOwnedCurrentPlayerInt(pixColor) ) {
                         cc = pixColor;
                         break;
