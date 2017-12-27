@@ -338,30 +338,18 @@ public class RiskUtil {
          * in the case of map files it will get the "name" "crd" "prv" "pic" "map" and any "comment" and number of "countries"
          * and for cards it will have a "missions" that will contain the String[] of all the missions
          */
-	public static java.util.Map loadInfo(String fileName,boolean cards) {
-
-            Hashtable info = new Hashtable();
-
-            for (int c=0;true;c++) {
-
-                BufferedReader bufferin=null;
-
-                try {
-
-                        bufferin= RiskUtil.readMap(RiskUtil.openMapStream(fileName));
-                        Vector misss=null;
-
-                        if (cards) {
+        public static java.util.Map RiskUtil(){
+            boolean cards = false;
+              if (cards) {
                             MapTranslator.setCards( fileName );
-                            misss = new Vector();
+                Vector misss;
+                misss = new Vector();
                         }
-
-                        String input = bufferin.readLine();
-                        String mode = null;
-
-                        while(input != null) {
-
-                                if (input.equals("")) {
+            return null;
+            
+        }
+        public static java.util.Map RiskUtil1(){
+          if (input.equals("")) {
                                         // do nothing
                                         //System.out.print("Nothing\n"); // testing
                                 }
@@ -376,11 +364,13 @@ public class RiskUtil {
                                     }
                                     info.put("comment", comment);
                                 }
-                                else {
-
-                                        if (input.charAt(0)=='[' && input.charAt( input.length()-1 )==']') {
-                                                mode="newsection";
+            return null;
+        }
+        public static java.util.Map RiskUtil2(){
+             if (input.charAt(0)=='[' && input.charAt( input.length()-1 )==']') {
+                 String mode = "newsection";
                                         }
+            Object mode = null;
 
                                         if ("files".equals(mode)) {
 
@@ -392,22 +382,24 @@ public class RiskUtil {
                                                 info.put( fm , val);
 
                                         }
-                                        else if ("borders".equals(mode)) {
+            return null;
+        }
+        public static java.util.Map RiskUtil3(){
+            Object mode = null;
+             if("borders".equals(mode)) {
                                                 // we dont care about anything in or after the borders section
-                                                break;
+                                                
                                         }
                                         else if ("countries".equals(mode)) {
                                             info.put("countries", Integer.parseInt(input.substring(0,input.indexOf(' '))));
                                         }
-                                        else if ("missions".equals(mode)) {
+            return null;
+        }
+        public static java.util.Map RiskUtil4(){
+            Object description = null;
+            while (description==null) {
 
-                                                StringTokenizer st = new StringTokenizer(input);
-                                            
-                                                String description=MapTranslator.getTranslatedMissionName(st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken());
-
-                                                while (description==null) {
-
-                                                        StringBuffer d = new StringBuffer();
+                                                        StringBuilder d = new StringBuilder();
 
                                                         while (st.hasMoreElements()) {
 
@@ -419,27 +411,68 @@ public class RiskUtil {
                                                         break;
 
                                                 }
+            return null;
 
-                                                misss.add( description );
+        }
+        public static java.util.Map RiskUtil5(){
+            int mode = 0;
+                           switch (mode) {
+                               case  "missions":
+            {
+                String input = null;
+                StringTokenizer st = new StringTokenizer(input);
+            }
+                                            String description=MapTranslator.getTranslatedMissionName(st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken());
+                                            RiskUtil4();
+                                            misss.add( description );
+                                            break;
+                                    // if "continents" or "cards" then just dont do anything in those sections
+                                        case "newsection":
+                                            mode = input.substring(1, input.length()-1); // set mode to the name of the section
+                                            break;
+                                        default:
+                                            break;
+                                    }
+            return null;
 
-                                        }
-                                        else if ("newsection".equals(mode)) {
+        }
+	public static java.util.Map loadInfo(String fileName,boolean cards) {
 
-                                                mode = input.substring(1, input.length()-1); // set mode to the name of the section
+            Hashtable info = new Hashtable();
 
-                                        }
-                                        else if (mode == null) {
-                                           while (input.indexOf(' ')>0) {
-                                                info.put( input.substring(0,input.indexOf(' ')) , input.substring(input.indexOf(' ')+1) );
-                                           break;
-                                           
-                                           }
-                                        }
-                                        // if "continents" or "cards" then just dont do anything in those sections
+            for (int c=0;true;c++) {
 
+                BufferedReader bufferin=null;
+
+                try {
+                        RiskUtil();
+                        bufferin= RiskUtil.readMap(RiskUtil.openMapStream(fileName));
+                        Vector misss=null;
+
+                      
+
+                        String input = bufferin.readLine();
+                        String mode = null;
+
+                        while(input != null) {
+
+                                RiskUtil1();
+                                do {
+
+                                       RiskUtil2();
+                                       RiskUtil3();
+                                       RiskUtil4();
+                                            if (null == mode) {
+                                                while (input.indexOf(' ')>0) {
+                                                    info.put( input.substring(0,input.indexOf(' ')) , input.substring(input.indexOf(' ')+1) );
+                                                    break;
+                                                    
+                                                }
+                                            }
+                                       RiskUtil5();
                                 }
 
-                                input = bufferin.readLine(); // get next line
+                               input = bufferin.readLine(); // get next line
                         }
 
                         if (cards) {
