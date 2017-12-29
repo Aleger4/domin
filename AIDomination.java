@@ -76,7 +76,7 @@ public class AIDomination extends AISubmissive {
             return p.getCards().size() - ps.p.getCards().size();
         }
 
-        public String toString() {
+        public boolean equals() {
             return p.toString();
         }
     }
