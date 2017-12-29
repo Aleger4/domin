@@ -2107,11 +2107,25 @@ public class AIDomination extends AISubmissive {
      * find the possible elimination targets in priority order
      * will filter out attacks that seem too costly or if the target has no cards
      */
-    public void Targets2(){
+    public boolean Targets3(){
+         GameState gameState;
+        int i;
+        Player player2;
+     
+         boolean isTarget;
+         double divisor = 1;
+          int cardCount = player2.getCards().size();
+
+            if (!isTarget && ps.defenseValue > gameState.me.armies/divisor + player.getExtraArmies()) {
+             
+            }
+            
+            return false;
+    }
+    public boolean Targets2(){
         GameState gameState;
         int i;
         Player player2;
-        player2 = ps.p;
         PlayerState ps = gameState.orderedPlayers.get(i);
          double divisor = 1;
           int cardCount = player2.getCards().size();
@@ -2119,18 +2133,14 @@ public class AIDomination extends AISubmissive {
         if ((!isIncreasingSet() || game.getNewCardState() < gameState.me.defenseValue/8) && (!attack || player2.getTerritoriesOwned().size() > 1) && !game.getCards().isEmpty() && cardCount < 3 && (game.getCardMode()==RiskGame.CARD_ITALIANLIKE_SET||(cardCount+player.getCards().size()<RiskGame.MAX_CARDS))) {
                 divisor+=(.5*Math.max(0, isIncreasingSet()?2:4 - cardCount));
             }
-        boolean isTarget;
-
-            if (!isTarget && ps.defenseValue > gameState.me.armies/divisor + player.getExtraArmies()) {
-             
-            }
+      return false; 
     }
-    public void Targets1(){
+    public boolean Targets1(){
        GameState gameState;
        Map<Country, AttackTarget> targets;
         int i;
         PlayerState ps = gameState.orderedPlayers.get(i);  
-        et.ps = ps;
+      
         Player player2 = ps.p;
      
         List<Country> targetCountries = player2.getTerritoriesOwned();
@@ -2146,6 +2156,7 @@ public class AIDomination extends AISubmissive {
                
                             }
                 et.attackTargets.add(attackTarget);
+                return false;
     }
     private List<EliminationTarget> findEliminationTargets(Map<Country, AttackTarget> targets, GameState gameState,
                                                            boolean attack, int remaining) {
@@ -2162,7 +2173,7 @@ public class AIDomination extends AISubmissive {
             double divisor = 1;
             int cardCount = player2.getCards().size();
             Targets2();
-            
+            Targets3();
 
             List<Country> targetCountries = player2.getTerritoriesOwned();
             EliminationTarget et = new EliminationTarget();
