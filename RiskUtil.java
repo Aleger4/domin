@@ -68,8 +68,11 @@ public class RiskUtil {
 		try {
 			settings.load(RiskUtil.class.getResourceAsStream("settings.ini"));
 		}
-		catch (Exception ex) {
-			throw new RuntimeException("can not find settings.ini file!",ex);
+		catch (IOException ex) {
+			                 try {
+                        throw new RuntimeException("can not find settings.ini file!", ex);
+                    } catch (RuntimeException runtimeException) {
+                    }
 		}
 
 		RISK_VERSION_URL = settings.getProperty("VERSION_URL");
@@ -572,14 +575,20 @@ public class RiskUtil {
             // we need to make sure the preview dir exists, and if it does not, we must make it
             File parent = outFile.getParentFile();
             if (!parent.isDirectory() && !parent.mkdirs()) { // if it does not exist and i cant make it
-                throw new RuntimeException("can not create dir "+parent);
+                try {
+                    throw new RuntimeException("can not create dir " + parent);
+                } catch (RuntimeException runtimeException) {
+                }
             }
             return new FileOutputStream( outFile );
         }
 
         public static void rename(File oldFile,File newFile) {
             if (newFile.exists() && !newFile.delete()) {
-                throw new RuntimeException("can not del dest file: "+newFile);
+                try {
+                    throw new RuntimeException("can not del dest file: " + newFile);
+                } catch (RuntimeException runtimeException) {
+                }
             }
             if (!oldFile.renameTo(newFile)) {
                 try {
@@ -589,8 +598,11 @@ public class RiskUtil {
                         System.err.println("can not del source file: "+oldFile);
                     }
                 }
-                catch(Exception ex) {
-                    throw new RuntimeException("rename failed: from: "+oldFile+" to: "+newFile,ex);
+                catch(IOException ex) {
+                    try {
+                        throw new RuntimeException("rename failed: from: " + oldFile + " to: " + newFile, ex);
+                    } catch (RuntimeException runtimeException) {
+                    }
                 }
             }
         }
